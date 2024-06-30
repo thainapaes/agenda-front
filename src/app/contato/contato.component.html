@@ -1,0 +1,103 @@
+<form [formGroup]="formulario">
+  <input type="number" class="form-control" formControlName="id" readonly [(ngModel)]="contato.id">
+  <input type="text" placeholder="Nome" class="form-control" formControlName="nome" [(ngModel)]="contato.nome">
+  <input type="text" placeholder="Email" class="form-control" formControlName="email" [(ngModel)]="contato.email">
+  @if (formulario.get('celular').hasError('required') && formulario.get('celular').touched) {
+    <p class="alert alert-warning">O campo celular não pode ser nulo</p>
+  }
+  @if (formulario.get('celular').hasError('maxlength') && formulario.get('celular').touched) {
+    <p class="alert alert-warning">O celular deve ter no máximo 11 números</p>
+  }
+  <input type="text" placeholder="Celular" class="form-control" formControlName="celular" [(ngModel)]="contato.celular">
+  @if (formulario.get('telefone').hasError('maxlength') && formulario.get('telefone').touched) {
+    <p class="alert alert-warning">O celular deve ter no máximo 10 números</p>
+  }
+  <input type="text" placeholder="Telefone" class="form-control" formControlName="telefone" [(ngModel)]="contato.telefone">
+
+  @if(exibirBotoes) {
+    <input type="button" value="Cadastrar" class="btn btn-primary" (click)="salvarContato()" [disabled]="formulario.invalid">
+
+  } @else {
+    <input type="button" value="Alterar" class="btn btn-primary" (click)="alterar(formulario.value.id)" [disabled]="formulario.invalid">
+    <!--<input type="button" value="Favoritar" class="btn btn-warning" (click)="favoritar(formulario.value.celular)">-->
+    @if(statusFavorito === 'N') {
+      <button class="custom-button" (click)="favoritar(formulario.value.celular)">
+        <i class="bi bi-star custom-icon"></i>
+      </button>
+    } @else {
+        <button class="custom-button" (click)="favoritar(formulario.value.celular)">
+          <i class="bi bi-star-fill custom-icon"></i>
+        </button>
+    }
+    <!--<input type="button" value="Inativar" class="btn btn-danger" (click)="inativar(formulario.value.celular)">-->
+    @if(statusAtivo === 'S') {
+        <button class="custom-button-inativo" (click)="inativar(formulario.value.celular)">
+          <i class="bi bi-person-x-fill custom-icon-inativo"></i>
+        </button>
+    } @else {
+      <button class="custom-button-ativo" (click)="inativar(formulario.value.celular)">
+        <i class="bi bi-person-check-fill custom-icon-ativo"></i>
+      </button>
+    }
+    <input type="button" value="Cancelar" class="btn btn-primary" (click)="cancelar()">
+  }
+</form>
+
+
+<table class="table" *ngIf="tabelaVisivel">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Celular</th>
+      <th>Telefone</th>
+      <th>Favoritar</th>
+      <th>Inativar</th>
+      <th>Selecionar</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let c of contatos; index as i">
+      <td>{{i}}</td>
+      <td>{{c.nome}}</td>
+      <td>{{c.email}}</td>
+      <td>{{c.celular}}</td>
+      <td>{{c.telefone}}</td>
+      @if(c.snFavorito === 'N') {
+        <td>
+          <button class="custom-button" (click)="favoritar(c.celular)">
+            <i class="bi bi-star custom-icon"></i>
+          </button>
+        </td>
+      } @else {
+        <td>
+          <button class="custom-button" (click)="favoritar(c.celular)">
+            <i class="bi bi-star-fill custom-icon"></i>
+          </button>
+        </td>
+      }
+
+      @if(c.snAtivo === 'S') {
+        <td>
+          <button class="custom-button-inativo" (click)="inativar(c.celular)">
+            <i class="bi bi-person-x-fill custom-icon-inativo"></i>
+          </button>
+        </td>
+      } @else {
+        <td>
+          <button class="custom-button-ativo" (click)="inativar(c.celular)">
+            <i class="bi bi-person-check-fill custom-icon-ativo"></i>
+          </button>
+        </td>
+      }
+      <td>
+        <!--<button class="btn btn-success" (click)="selecionarContato(i)">Selecionar</button>-->
+        <button class="custom-button-editar" (click)="selecionarContato(i)">
+          <i class="bi bi-pencil-square custom-icon-editar"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
