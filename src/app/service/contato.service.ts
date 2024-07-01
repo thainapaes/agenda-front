@@ -23,6 +23,10 @@ export class ContatoService {
     return this.http.get<Contato[]>(this.url);
   }
 
+  buscar(celular: string): Observable<Contato>{
+    return this.http.get<Contato>(this.url + "/" + celular);
+  }
+
   salvarContato(obj:ContatoRequestDto):Observable<Contato>{
     return this.http.post<Contato>(this.url, obj);
   }

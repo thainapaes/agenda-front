@@ -18,7 +18,7 @@
     <input type="button" value="Cadastrar" class="btn btn-primary" (click)="salvarContato()" [disabled]="formulario.invalid">
 
   } @else {
-    <input type="button" value="Alterar" class="btn btn-primary" (click)="alterar(formulario.value.id)" [disabled]="formulario.invalid">
+    <input type="button" value="Alterar" class="btn btn-primary" (click)="alterar(formulario.value.celular)" [disabled]="formulario.invalid">
     <!--<input type="button" value="Favoritar" class="btn btn-warning" (click)="favoritar(formulario.value.celular)">-->
     @if(statusFavorito === 'N') {
       <button class="custom-button" (click)="favoritar(formulario.value.celular)">

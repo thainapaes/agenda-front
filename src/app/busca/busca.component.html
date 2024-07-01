@@ -1,0 +1,25 @@
+<form [formGroup]="formulario">
+  <input type="text" placeholder="Celular" class="form-control" formControlName="celular">
+  <input type="button" value="Buscar" class="btn btn-primary" (click)="buscar(formulario.value.celular)">
+</form>
+
+
+<table class="table" *ngIf="tabela">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Celular</th>
+      <th>Telefone</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td>{{contato.nome}}</td>
+      <td>{{contato.email}}</td>
+      <td>{{contato.celular}}</td>
+      <td>{{contato.telefone}}</td>
+    </tr>
+  </tbody>
+</table>

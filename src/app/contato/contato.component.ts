@@ -87,7 +87,7 @@ export class ContatoComponent {
     this.service.alterarContato(celular, this.request)
     .subscribe(retorno => {
       let posicao = this.contatos.findIndex(obj => {
-        return obj.id == (retorno.id-1);
+        return obj.celular == retorno.celular;
       });
 
       this.contatos[posicao] = retorno;
@@ -107,7 +107,7 @@ export class ContatoComponent {
     this.service.favoritar(this.favRequest)
     .subscribe(retorno => {
       let posicao = this.contatos.findIndex(obj => {
-        return obj.id == (retorno.id-1);
+        return obj.celular == retorno.celular;
       });
 
       debugger
@@ -118,7 +118,11 @@ export class ContatoComponent {
       this.exibirBotoes = true;
       this.tabelaVisivel = true;
 
-      alert('Contato favoritado com sucesso!')
+      if (retorno.snFavorito === 'S') {
+        alert('Contato favoritado com sucesso!');
+      } else {
+        alert('Contato desfavoritado com sucesso!')
+      }
     });
   }
 
@@ -127,7 +131,7 @@ export class ContatoComponent {
     this.service.inativar(this.ativoRequest)
     .subscribe(retorno => {
       let posicao = this.contatos.findIndex(obj => {
-        return obj.id == (retorno.id-1);
+        return obj.celular == retorno.celular;
       });
 
       this.contatos[posicao] = retorno;
@@ -137,7 +141,11 @@ export class ContatoComponent {
       this.exibirBotoes = true;
       this.tabelaVisivel = true;
 
-      alert('Contato inativado com sucesso!')
+      if (retorno.snAtivo === 'N') {
+        alert('Contato desativado com sucesso!');
+      } else {
+        alert('Contato ativado com sucesso!')
+      }
     });
   }
 
